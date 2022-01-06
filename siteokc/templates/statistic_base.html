@@ -1,0 +1,61 @@
+<!doctype html>
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/media/logo.png" type="image/x-icon">
+
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navstyle2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/statistic.css' %}">
+    <link rel="stylesheet" href="{% static 'css/add_statistic.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+    <link rel="stylesheet" href="{% static 'css/alert_message.css' %}">
+    <link rel="stylesheet" href="{% static 'css/widgets.css' %}">
+    <link rel="stylesheet" href="{% static  'css/base.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
+
+    <title>{% block title %}ДСНС{% endblock %}</title>
+</head>
+<body>
+
+
+{% include 'inc/_nav.html' %}
+
+<div class="wrapper" style="font-family: 'Times New Roman', Georgia, Serif;">
+
+    <div class="content">
+        <div class="container mt-2">
+
+            {% include 'inc/_messages.html' %}
+            {% block content %}CONTENT{% endblock %}
+        </div>
+    </div>
+    <br>
+    <div class="footer" style="text-align: center;">
+        {% include 'inc/_nav2.html' %}
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/export_doc.js' %}"></script>
+<script src="{% static 'js/statistics_calls.js' %}"></script>
+<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+<script type="text/javascript">window.__admin_utc_offset__ = "10800";</script>
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</body>
+</html>

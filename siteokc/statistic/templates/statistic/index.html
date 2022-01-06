@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %}
+    {{ title }}|{{ block.super }}
+{% endblock %}
+
+
+{% block content%}
+
+
+<div>
+    <h3>{{ title }} за {{ data }}</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Підрозділ</th>
+            <th scope="col">Кількість дзвінків</th>
+            <th scope="col">Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in statistic %}
+        <tr>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{item.number_of_calls }}</td>
+            <td>{{ item.date|date:"d-m-Y" }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <h3>{{ title }} за остані </h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Номер телефону</th>
+            <th scope="col">24 години</th>
+            <th scope="col">7 днів</th>
+            <th scope="col">1 місяць</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>101</td>
+            <td>{{ number_101 }}</td>
+            <td>{{ days7_101 }}</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>112</td>
+            <td>{{ number_112 }}</td>
+            <td>{{ days7_112 }}</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>Всього</td>
+            <td>{{ total }}</td>
+            <td>{{ days7 }}</td>
+            <td>0</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,289 @@
+<!doctype html>
+{% if request.user.is_authenticated %}
+{% load static %}
+{% load i18n %}
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/media/logo.png" type="image/x-icon">
+
+
+    <link rel="stylesheet" href="{% static  'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static  'css/navstyle2.css' %}">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
+    <link rel="stylesheet" href="{% static 'css/statistics_region.css' %}">
+    <link rel="stylesheet" href="{% static  'css/alert_message.css' %}">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+
+
+    <title>{% block title %}ДСНС{% endblock %}</title>
+
+</head>
+
+<body>
+
+{% include 'inc/_nav.html' %}
+
+<div class="wrapper" style="font-family: 'Times New Roman', Georgia, Serif;">
+    <div class="content">
+        <div class="container-fluid">
+            {% include 'inc/_messages.html' %}
+            <div class="row">
+                <div class="col-md-4">
+                    {% block sidebar %}SIDEBAR{% endblock %}
+                </div>
+                <div class="col-md-8">
+                    {% block content %}CONTENT{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="footer" style="text-align: center;">
+        {% include 'inc/_nav2.html' %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script src="{% static  'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/ajax_home.js' %}"></script>
+
+<script>
+jQuery(function($){
+	var max_col_height = 0;
+	$('.statistics_region').each(function(){
+		if ($(this).height() > max_col_height) {
+			max_col_height = $(this).height();
+		}
+	});
+	$('.statistics_region').height(max_col_height);
+});
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.part').on('mouseover', within_the_area);
+        $('.part').on('mouseout', outside_the_area);
+        $('.username').hide();
+    });
+
+    function within_the_area() {
+        $(".loading").css({'opacity': 1});
+        $.ajax({
+            data: {'value': $(this).attr('value')},
+            url: "{% url 'return_queryset' %}",
+            success: function (resp) {
+                $(".loading").css({'opacity': 0});
+                $('.name_region').show();
+                $('.font1').hide();
+                $('.font2').hide();
+                $('.font3').hide();
+                $('.font4').hide();
+                $('.font5').hide();
+                $('.font6').hide();
+                $('.font7').hide();
+                $('.font8').hide();
+                $('.font9').hide();
+                $('.font10').hide();
+                $('.font11').hide();
+                $('.font12').hide();
+                $('.font13').hide();
+                $('.font14').hide();
+                $('.font15').hide();
+                $('.font16').hide();
+                $('.font17').hide();
+
+
+                $('.cont1').html(resp.departures);
+                $('.cont2').html(resp.events);
+                $('.cont3').html(resp.ns);
+                $('.cont12').html(resp.people_rescued.sum);
+                $('.cont13').html(resp.children_rescued.sum);
+                $('.cont14').html(resp.people_injured.sum);
+                $('.cont15').html(resp.children_injured.sum);
+                $('.cont10').html(resp.quantity_technics.sum);
+                $('.cont11').html(resp.quantity_peoples.sum);
+                $('.cont16').html(resp.people_died.sum);
+                $('.cont17').html(resp.children_died.sum);
+                $('.cont4').html(resp.fire);
+                $('.cont6').html(resp.vnp);
+                $('.cont7').html(resp.hibniy_viklik);
+                $('.cont8').html(resp.zaminuvanya);
+                $('.cont9').html(resp.inshi);
+                $('.cont5').html(resp.dopomoga);
+            },
+            error: function (resp) {
+                console.log('error message');
+            }
+        });
+        $('.name').html($(this).attr('information'));
+    }
+
+    function outside_the_area() {
+        $('.name').html("<p>Наведіть курсор на потрібний район</p>");
+        $('.username').empty();
+        $('.name_region').hide();
+        $('.font1').show();
+        $('.font2').show();
+        $('.font3').show();
+        $('.font4').show();
+        $('.font5').show();
+        $('.font6').show();
+        $('.font7').show();
+        $('.font8').show();
+        $('.font9').show();
+        $('.font10').show();
+        $('.font11').show();
+        $('.font12').show();
+        $('.font13').show();
+        $('.font14').show();
+        $('.font15').show();
+        $('.font16').show();
+        $('.font17').show();
+
+
+        $('.cont1').empty();
+        $('.cont2').empty()
+        $('.cont3').empty()
+        $('.cont4').empty();
+        $('.cont5').empty();
+        $('.cont6').empty();
+        $('.cont7').empty();
+        $('.cont8').empty();
+        $('.cont9').empty();
+        $('.cont10').empty();
+        $('.cont11').empty()
+        $('.cont12').empty()
+        $('.cont13').empty();
+        $('.cont14').empty();
+        $('.cont15').empty();
+        $('.cont16').empty();
+        $('.cont17').empty();
+    }
+
+    var a = 0;
+    var date = new Date();
+    var days = date.getDate();
+    function city() {
+    $.ajax({
+        data: {'value': 'test'},
+        url: "{% url 'return_of_city' %}",
+        success: function (resp) {
+             if (resp.departures_obl != undefined) {
+
+                 $('.font1').html(resp.departures_obl);
+                 $('.font2').html(resp.events_obl);
+                 $('.font3').html(resp.ns_obl);
+                 $('.font12').html(resp.people_rescued_obl.sum);
+                 $('.font13').html(resp.children_rescued_obl.sum);
+                 $('.font14').html(resp.people_injured_obl.sum);
+                 $('.font15').html(resp.children_injured_obl.sum);
+                 $('.font10').html(resp.quantity_technics_obl.sum);
+                 $('.font11').html(resp.quantity_peoples_obl.sum);
+                 $('.font16').html(resp.people_died_obl.sum);
+                 $('.font17').html(resp.children_died_obl.sum);
+                 $('.font4').html(resp.fire_obl);
+                 $('.font5').html(resp.dopomoga_obl);
+                 $('.font6').html(resp.vnp_obl);
+                 $('.font7').html(resp.hibniy_viklik_obl);
+                 $('.font8').html(resp.zaminuvanya_obl);
+                 $('.font9').html(resp.inshi_obl);
+             }
+             if (resp.departures_obl == undefined) {
+
+                 $('.font1').html(0);
+                 $('.font2').html(0);
+                 $('.font3').html(0);
+                 $('.font12').html(0);
+                 $('.font13').html(0);
+                 $('.font14').html(0);
+                 $('.font15').html(0);
+                 $('.font10').html(0);
+                 $('.font11').html(0);
+                 $('.font16').html(0);
+                 $('.font17').html(0);
+                 $('.font4').html(0);
+                 $('.font5').html(0);
+                 $('.font6').html(0);
+                 $('.font7').html(0);
+                 $('.font8').html(0);
+                 $('.font9').html(0);
+             }
+
+            day = resp.day;
+            if (day != days) {
+                days = day
+                $('.podiya').css({'width': '0', 'height': '0'});
+            }
+            if (resp.index != a ) {
+                a = resp.index;
+                b = resp.city;
+                $('#' + b).css({'width': '40', 'height': '40'});
+            }
+        },
+        error: function (resp) {
+            console.log('error message');
+        }
+    });
+    }
+    $(document).ready(function(){
+        city();
+        setInterval('city()', 10000)
+    });
+
+
+
+
+     $(document).ready(function() {
+        $('.podiya').on('click', information);
+     });
+
+     function information() {
+        $.ajax({
+            data: {'city': $(this).attr('value'), 'information': $(this).attr('information')},
+            url: "{% url 'return_queryset_city' %}",
+            cache: false,
+            success: function(html){
+                $(".info-container").html(html);
+            },
+            error: function (html) {
+                console.log('error message');
+            }
+        });
+
+        $('.statistic_of_city').css('display', 'block');
+
+     }
+
+
+
+
+
+
+
+</script>
+
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin="">
+
+</script>
+
+
+</body>
+{% endif %}
+</html>
+

@@ -1,0 +1,380 @@
+{% extends 'journal_base.html' %}
+{% block title %}
+{{ title }}|{{ block.super }}
+{% endblock %}
+
+{% block content%}
+<div class="text-center">
+    <div class="pagination">
+        <a href="{% url 'journal'%}">Сьогодні</a>
+        <a href="{% url 'page1' %}">{{ page1 }}</a>
+        <a href="{% url 'page2' %}">{{ page2 }}</a>
+        <a href="{% url 'page3' %}" class="active">{{ page3 }}</a>
+        <a href="#" onclick="document.getElementById('id02').style.display='block'">Інша дата</a>
+    </div>
+</div>
+
+<div id="source-html">
+    <table style="background-color: white;">
+        <colgroup>
+            <col class="z">
+            <col>
+            <col class="w">
+            <col class="q">
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col class="z">
+            <col class="z">
+            <col>
+            <col>
+        </colgroup>
+        <tr>
+            <td colspan="16" style="background-color: #2C608A;">
+                <h3 class="title-table" style="text-align: center; color: white;">{{ title }}</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>Отримання (передача) повідомлення</td>
+            <td colspan="3">Інформація</td>
+            <td colspan="8">Час (години, хвилини)</td>
+            <td colspan="2">Відповідальна особа яка</td>
+            <td colspan="2">Редагування</td>
+
+        </tr>
+        <tr>
+            <td>Дата/час</td>
+            <td>Тип події</td>
+            <td>Інформація про обстановку на місці події (адреса, характеристика
+                об’єкта, стисла інформація
+                про подію, інформація з місця події про хід проведення робіт, виклику додаткових сил та засобів,
+                служб
+                взаємодії, несправностей джерел протипожежного водопостачання та засобів зв’язку, проїздів, доріг
+                тощо,
+                прізвища осіб, які передали та прийняли інформацію)
+            </td>
+            <td>Підрозділи (відділення), що виїхали на місце події, навчання (заняття)</td>
+            <td>Виїзду</td>
+            <td>Прибуття до місця</td>
+            <td>Подачі першого ствола на гасіння</td>
+            <td>Площа пожежі(м2)</td>
+            <td>Локалізації</td>
+            <td>Площа пожежі(м2)</td>
+            <td>Ліквідації</td>
+            <td>Повернення до місця розта шування</td>
+            <td>Додала</td>
+            <td>Відредагувала</td>
+            <td>Змінити</td>
+            <td>Видалити</td>
+
+        </tr>
+        {% for item in journal %}
+        {% if item.type_of_fire_id == 8 %}
+        <tr style="color: #CB0B0B; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+
+        {% if item.type_of_fire_id == 9 %}
+        <tr style="color: #06629E; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+
+        {% if item.type_of_fire_id == 10 %}
+        <tr style="color: #E57600; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+
+        {% if item.type_of_fire_id == 11 %}
+        <tr style="color: #A40AC0; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+
+        {% if item.type_of_fire_id == 12 and item.subtype_id != 37 %}
+        <tr style="color: green; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+        {% if item.type_of_fire_id == 13 %}
+        <tr style="color: #575558; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+        {% if item.type_of_fire_id == 14 %}
+        <tr style="color: #CB2B6D; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+        {% if item.type_of_fire_id == 15 %}
+        <tr style="color: #8A1818; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+        {% if item.subtype_id == 37 %}
+        <tr style="color: #A58806; font-weight: bold;">
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.type_of_fire }}</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.barrel_feed_time }}</td>
+            <td>{{ item.area }}</td>
+            <td>{{ item.localization_time }}</td>
+            <td>{{ item.area2 }}</td>
+            <td>{{ item.liquidation_time }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+</div>
+
+
+<div id="myForm" class="modal">
+    <form class="modal-content animate" action="" method="post">
+        <span onclick="closeForm()" class="close" title="Закрити">×</span>
+        <div class="ram">
+            <h4 class="title" style="text-align:center;">Оперативні вийзди</h4>
+            <hr style="color: #FF9B4D; height: 2px;">
+            <p>Ви впевнені що хочете видалити запис?</p>
+            {% csrf_token %}
+            <button type="submit" class="signupbtn" style="background-color: #2C608A;">Видалити</button>
+        </div>
+    </form>
+</div>
+<div id="id02" class="modal">
+    <form class="modal-content animate" action="{% url 'filter' %}" method="post">
+        <span onclick="document.getElementById('id02').style.display='none'"
+              class="close" title="Закрити форму">×</span>
+        <div class="ram">
+            <h4 class="title" style="text-align:center;">Оперативні вийзди</h4>
+            <hr style="color: #FF9B4D; height: 2px;">
+            <p>Виберіть проміжок часу для отримання журналу оперативних виїздів</p>
+            {% csrf_token %}
+            {{ form_date_range.as_p }}
+            <button type="submit" class="signupbtn" style="background-color: #2C608A;">Відправити</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (1:1.1+202109281949+c3084ef5ed)"
+   sodipodi:docname="ns.jpg.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.75187991"
+     inkscape:cx="173.56495"
+     inkscape:cy="561.92484"
+     inkscape:window-width="1848"
+     inkscape:window-height="1016"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <style
+       id="style54">.cls-1{fill:#ff0;stroke:#f03;stroke-miterlimit:10;stroke-width:2px;}.cls-2{fill:red;}</style>
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g71"
+       transform="matrix(0.26458333,0,0,0.26458333,6.5113011,47.913607)">
+      <path
+         class="cls-1"
+         d="M 24.79,4.93 3.36,40.43 A 1.06,1.06 0 0 0 4.27,42 h 42.4 a 1.05,1.05 0 0 0 0.91,-1.6 L 26.14,4.93 a 0.79,0.79 0 0 0 -1.35,0 z"
+         transform="translate(-2.21,-3.55)"
+         id="path58" />
+      <path
+         class="cls-2"
+         d="m 25.83,33.24 h -0.51 l -2.1,-14.46 a 3,3 0 0 1 2.61,-3.46 h 0.31 a 2.53,2.53 0 0 1 2.3,3.08 z"
+         transform="translate(-2.21,-3.55)"
+         id="path60" />
+      <circle
+         class="cls-2"
+         cx="23.26"
+         cy="32.009998"
+         r="1.74"
+         id="circle62" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+{% extends 'base_user.html' %}
+
+{% block title %}
+{{ title }}|{{ block.super }}
+{% endblock %}
+
+{% block content%}
+<form method="post">
+    <div class="container">
+        <h4 class="title" style="text-align:center;">{{ title }}</h4>
+        <hr style="color: #FF9B4D; height: 2px;">
+        <p>Заповніть цю форму, щоб пройти авторизацію</p>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="signupbtn" style="background-color: #2C608A;">Увійти</button>
+        <label>
+            <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Запам'ятай мене
+        </label>
+
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+        <span>Немає облікового запису? <a href="{% url 'register' %}">Зареєструйтесь тут</a></span>
+        <hr>
+        <span>Забули пароль? <a href="{% url 'password_reset' %}">Відновити</a></span>
+
+    </div>
+</form>
+
+
+{% endblock %}
+

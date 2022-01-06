@@ -1,0 +1,40 @@
+{% if messages %}
+
+{% for message in messages %}
+{% if message.tags == 'error' %}
+<div class="alert warning">
+    <strong>
+        {{ message }}
+    </strong>
+    <span class="closebtn">&times;</span>
+</div>
+{% else %}
+<div class="alert {{ message.tags }}">
+    <span class="closebtn">&times;</span>
+     <strong>
+        {{ message }}
+    </strong>
+</div>
+{% endif %}
+
+{% endfor %}
+
+{% endif %}
+<script>
+var close = document.getElementsByClassName("closebtn");
+var i;
+
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function(){
+    var div = this.parentElement;
+    div.style.opacity = "0";
+    setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+}
+
+
+
+
+</script>
+
+

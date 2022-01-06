@@ -1,0 +1,37 @@
+<!doctype html>
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="{% static  'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static  'css/navstyle2.css' %}">
+
+
+
+    <title>{% block title %}ДСНС{% endblock %}</title>
+</head>
+<body>
+
+
+{% include 'inc/_nav.html' %}
+
+<div class="container mt-2">
+
+    {% include 'inc/_messages.html' %}
+    {% block content %}CONTENT{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script src="{% static  'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
+
+
+</body>
+</html>

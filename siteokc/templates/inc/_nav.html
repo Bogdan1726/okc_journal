@@ -1,0 +1,79 @@
+<header>
+    <div class="container">
+        <div class="tp-over">
+            <div class="tp-1"><img src="/media/logo.png" alt="logo" width="45" height="45">
+                <a class="h-logo">ГУ ДСНС України в Дніпропетровській області</a>
+            </div>
+            <div class="tp-2">
+                <nav class="h-menu">
+                    <div id="uNMenuDiv1" class="uMenuV">
+                        <ul class="uMenuRoot">
+                            <li><a class=" uMenuItemA" href="{% url 'home' %}"><span>Головна</span></a></li>
+                            <li class="uWithSubmenu"><a href="#"><span>Статистика</span></a>
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'statistic' %}">Статистика дзвінків</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'statistic_journal' %}">Статистика викликів</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Інше</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="uWithSubmenu"><a href="#"><span>журнал виїзду</span></a>
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'journal' %}">Оперативні виїзди</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'non_fire' %}">Виїзди не пов'язані з пожежею</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Інше</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li style="color: white;" id="user-tools">
+                                Вітаю Вас,
+                                <strong style="color:#FF9B4D;">{{ user.first_name }}</strong>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                            <li class="uWithSubmenu"><a
+                                    href="#"><span>{{ user.username }}</span></a>
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'logout' %}">Змінити користувача</a>
+                                    </li>
+                                    <li>
+                                        <a style="color:#FF9B4D;" href="{% url 'logout' %}">Вихід</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            {% endif %}
+                        </ul>
+
+                    </div>
+                </nav>
+                <div class="h-menu-button" onclick="$('.h-menu').slideToggle()">
+                    <div><span class="hm1"></span><span class="hm2"></span><span class="hm3"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+
+  $('.navigation').on('click', function() {
+    $('nav ul').toggleClass('submisionug');
+  });
+
+
+</script>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}|{{ block.super }}
+{% endblock %}
+
+
+{% block content%}
+<form>
+    <div class="container text-center">
+        <img src="https://www.iconsdb.com/icons/preview/caribbean-blue/administrator-xxl.png" alt="John"
+             style="width:200px height:2000px">
+        <h4 class="title" style="text-align:center;">Профіль користувача</h4>
+        <hr style="color: #FF9B4D; height: 2px;">
+        <p>{{ customer }}</p>
+        <p>Прізвище: {{ customer.last_name }}</p>
+        <p>Ім'я: {{ customer.first_name }}</p>
+        <p>Єлектронна пошта: {{ customer.email }}</p>
+    </div>
+</form>
+
+
+{% endblock %}

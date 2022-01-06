@@ -1,0 +1,129 @@
+{% extends 'journal_base.html' %}
+
+{% block title %}
+{{ title }}|{{ block.super }}
+{% endblock %}
+
+{% block content%}
+
+<style>
+    .w {
+  width: 30%;
+}
+.q {
+  width: 20%;
+
+
+
+</style>
+
+
+
+<div class="text-center">
+    <div class="pagination">
+        <a href="{% url 'non_fire' %}">Сьогодні</a>
+        <a href="{% url 'non_fire_page1' %}">{{ page1|date:"d.m" }}</a>
+        <a href="{% url 'non_fire_page2' %}">{{ page2|date:"d.m" }}</a>
+        <a href="{% url 'non_fire_page3' %}" class="active">{{ page3|date:"d.m" }}</a>
+    </div>
+</div>
+
+<div id="source-html">
+    <table>
+        <colgroup>
+            <col class="z">
+            <col class="w">
+            <col class="q">
+            <col>
+            <col>
+            <col>
+            <col class="z">
+            <col class="z">
+            <col>
+            <col>
+        </colgroup>
+        <tr>
+            <td colspan="10" style="background-color: #2C608A;">
+                <h3 class="title-table" style="text-align: center; color: white;">{{ title }}</h3>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">Отримання (передача) повідомлення</td>
+            <td colspan="2">Інформація</td>
+            <td colspan="3">Час (години, хвилини)</td>
+            <td colspan="2">Відповідальна особа яка</td>
+            <td colspan="2">Редагування</td>
+        </tr>
+        <tr>
+            <td>Дата/час</td>
+            <td>Інформація про обстановку на місці події (адреса, характеристика об’єкта, стисла інформація
+                про подію, інформація з місця події про хід проведення робіт, виклику додаткових сил та засобів, служб
+                взаємодії, несправностей джерел протипожежного водопостачання та засобів зв’язку, проїздів, доріг тощо,
+                прізвища осіб, які передали та прийняли інформацію)
+            </td>
+            <td>Підрозділи (відділення), що виїхали на місце події, навчання (заняття)</td>
+            <td>Виїзду</td>
+            <td>Прибуття до місця</td>
+            <td>Повернення до місця розташування</td>
+            <td>Додала</td>
+            <td>Відредагувала</td>
+            <td>Змінити</td>
+            <td>Видалити</td>
+
+        </tr>
+        {% for item in no_fire %}
+        <tr>
+            <td>{{ item.date_of_receipt_message }} (№{{item.quantity_departure }})</td>
+            <td>{{ item.information }}</td>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{ item.departure_date }}</td>
+            <td>{{ item.time_of_arrival_to_the_place }}</td>
+            <td>{{ item.time_return_to_location }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.edit_user }}</td>
+            <td>
+                <a href="edit/{{ item.id }}">
+                    <img title="Змінити" class="export" src="/media/edit2.png" alt="" width="28" height="28">
+                </a>
+            </td>
+            <td>
+                <img title="Видалити" class="export" src="/media/del_logo.png" onclick="ClickIndex(this.id)"
+                     id="{{ item.id }}" alt=""
+                     width="30"
+                     height="30">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div id="id01" class="modal">
+    <form class="modal-content animate" action="{% url 'add_no_fire' %}" method="post">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Закрити">×</span>
+        <div class="ram">
+            <h4 class="title" style="text-align:center;">Не пов'язані з пожежею</h4>
+            <hr style="color: #FF9B4D; height: 2px;">
+            <p>Ви впевнені що хочете видалити запис?</p>
+            {% csrf_token %}
+            <button type="submit" class="signupbtn" style="background-color: #2C608A;">Видалити</button>
+            <hr>
+        </div>
+    </form>
+</div>
+
+<div id="myForm" class="modal">
+    <form class="modal-content animate" action="" method="post">
+        <span onclick="closeForm()" class="close" title="Закрити">×</span>
+        <div class="ram">
+            <h4 class="title" style="text-align:center;">Не пов'язані з пожежею</h4>
+            <hr style="color: #FF9B4D; height: 2px;">
+            <p>Ви впевнені що хочете видалити запис?</p>
+
+            {% csrf_token %}
+            <button type="submit" class="signupbtn" style="background-color: #2C608A;">Видалити</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+

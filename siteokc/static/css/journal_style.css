@@ -1,0 +1,121 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	height: 100%;
+}
+.wrapper {
+	position: relative;
+	min-height: 100%;
+}
+.content {
+	padding-bottom: 90px;
+}
+.footer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #333;
+}
+
+
+table {
+  width: 100%;
+  margin: 20px auto;
+  table-layout: fixed;
+  font-size: 9pt;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2 );
+
+}
+
+table,
+td,
+th {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 5px;
+  border: solid 2px #E6E4E4;
+  text-align: center;
+}
+
+.w {
+  width: 18%;
+}
+.q {
+  width: 10%;
+}
+
+.z {
+    width: 6%;
+}
+
+.add:hover {
+    transition: opacity .2s ease;
+    opacity: .6;
+    cursor: pointer;
+}
+
+.export {
+}
+.export:hover {
+    transition: opacity .2s ease;
+    opacity: .6;
+    cursor: pointer;
+}
+
+.title-table {
+    font-size: 14pt;
+}
+
+@media screen and (max-width: 400px) {
+    table {
+        font-size: 1pt;
+    }
+
+    .title-table {
+        font-size: 9pt;
+    }
+
+    .export {
+        width: 5px;
+        height: 5px;
+    }
+
+}
+
+
+@media screen and (max-width: 700px) {
+    table {
+        font-size: 2pt;
+    }
+
+    .title-table {
+        font-size: 9pt;
+    }
+
+    .export {
+        width: 5px;
+        height: 5px;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

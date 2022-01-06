@@ -1,0 +1,774 @@
+{% extends 'statistic_base.html' %}
+
+{% block title %}
+{{ title }}|{{ block.super }}
+{% endblock %}
+
+{% block content%}
+<div>
+    <img class="export" title="Експорт до word" src="/media/export word.png" onclick="exportHTML();" width="40px"
+         height="40px">
+
+    <img class="export" title="Експорт до excel" src="/media/export excel.png" onclick="ExportToExcel('xlsx');"
+         width="40px" height="40px">
+
+</div>
+<div class="text-center">
+    <div class="pagination">
+        <a href="{% url 'statistic_journal'%}">Сьогодні</a>
+        <a href="{% url 'statistic_journal_page1' %}">{{ page1|date:"d.m" }}</a>
+        <a href="{% url 'statistic_journal_page2' %}" class="active">{{ page2|date:"d.m" }}</a>
+        <a href="{% url 'statistic_journal_page3' %}">{{ page3|date:"d.m" }}</a>
+        <a href="#" onclick="document.getElementById('id01').style.display='block'">Інша дата</a>
+
+    </div>
+</div>
+
+<div id="export_doc">
+    <table id="tbl_exporttable_to_xls">
+        <tr>
+            <td colspan="5" style="background-color: #2C608A;">
+                <h4 class="title-table" style="text-align: center; color: white;">Кількість викликів</h4>
+            </td>
+        </tr>
+        <tr>
+            <th>Тип виклику</th>
+            <th>00:00 - 06:00</th>
+            <th>06:00 - 00:00</th>
+            <th>00:00 - 00:00</th>
+            <th>Площа(га)</th>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Загально</th>
+        </tr>
+        <tr>
+            <th>Кількість виїздів</th>
+            <td>{{ departures }}</td>
+            <td>{{ departures2 }}</td>
+            <td>{{ departures3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>Кількість подій</th>
+            <td>{{ events }}</td>
+            <td>{{ events2 }}</td>
+            <td>{{ events3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>Кількість НС</th>
+            <td>{{ ns }}</td>
+            <td>{{ ns2 }}</td>
+            <td>{{ ns3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>Врятовано осіб</th>
+            <td>{{ people_rescued.sum }}</td>
+            <td>{{ people_rescued2.sum }}</td>
+            <td>{{ people_rescued3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>Врятовано дітей</th>
+            <td>{{ children_rescued.sum }}</td>
+            <td>{{ children_rescued2.sum }}</td>
+            <td>{{ children_rescued3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>Постраждало осіб</th>
+            <td>{{ people_injured.sum }}</td>
+            <td>{{ people_injured2.sum }}</td>
+            <td>{{ people_injured3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>Постраждало дітей</th>
+            <td>{{ children_injured.sum }}</td>
+            <td>{{ children_injured2.sum }}</td>
+            <td>{{ children_injured3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>Загинуло осіб</th>
+            <td>{{ people_died.sum }}</td>
+            <td>{{ people_died2.sum }}</td>
+            <td>{{ people_died3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>Загинуло дітей</th>
+            <td>{{ children_died.sum }}</td>
+            <td>{{ children_died2.sum }}</td>
+            <td>{{ children_died3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Задіяно</th>
+        </tr>
+        <tr>
+            <td>Одиниць техніки</td>
+            <td>{{ quantity_technics.sum }}</td>
+            <td>{{ quantity_technics2.sum }}</td>
+            <td>{{ quantity_technics3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Особового складу</td>
+            <td>{{ quantity_peoples.sum }}</td>
+            <td>{{ quantity_peoples2.sum }}</td>
+            <td>{{ quantity_peoples3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Пожежі</th>
+        </tr>
+        <tr>
+            <th>Загально пожеж</th>
+            <td>{{ fire }}</td>
+            <td>{{ fire2 }}</td>
+            <td>{{ fire3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Житло</td>
+            <td>{{ dwelling }}</td>
+            <td>{{ dwelling2 }}</td>
+            <td>{{ dwelling3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Не житло</td>
+            <td>{{ notdwelling }}</td>
+            <td>{{ notdwelling2 }}</td>
+            <td>{{ notdwelling3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Об'єкт</td>
+            <td>{{ object }}</td>
+            <td>{{ object2 }}</td>
+            <td>{{ object3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Міністерство оборони</td>
+            <td>{{ min_oborony }}</td>
+            <td>{{ min_oborony2 }}</td>
+            <td>{{ min_oborony3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Укрзалізниця</td>
+            <td>{{ ukr_zaliz }}</td>
+            <td>{{ ukr_zaliz2 }}</td>
+            <td>{{ ukr_zaliz3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Врятовано осіб</td>
+            <td>{{ people_rescued_fire.sum }}</td>
+            <td>{{ people_rescued2_fire.sum }}</td>
+            <td>{{ people_rescued3_fire.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Врятовано дітей</td>
+            <td>{{ children_rescued_fire.sum }}</td>
+            <td>{{ children_rescued2_fire.sum }}</td>
+            <td>{{ children_rescued3_fire.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало осіб</td>
+            <td>{{ people_injured_fire.sum }}</td>
+            <td>{{ people_injured2_fire.sum }}</td>
+            <td>{{ people_injured3_fire.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало дітей</td>
+            <td>{{ children_injured_fire.sum }}</td>
+            <td>{{ children_injured2_fire.sum }}</td>
+            <td>{{ children_injured3_fire.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло осіб</td>
+            <td>{{ people_died_fire.sum }}</td>
+            <td>{{ people_died2_fire.sum }}</td>
+            <td>{{ people_died3_fire.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло дітей</td>
+            <td>{{ children_died_fire.sum }}</td>
+            <td>{{ children_died2_fire.sum }}</td>
+            <td>{{ children_died3_fire.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Екосистеми</th>
+        </tr>
+        <tr>
+            <td>Загальна кількість</td>
+            <td>{{ ecosystems }}</td>
+            <td>{{ ecosystems2 }}</td>
+            <td>{{ ecosystems3 }}</td>
+            <td>{{ count_ecosystems|floatformat:3 }}</td>
+        </tr>
+        <tr>
+            <td>Трава</td>
+            <td>{{ trava }}</td>
+            <td>{{ trava2 }}</td>
+            <td>{{ trava3 }}</td>
+            <td>{{ count_trava }}</td>
+        </tr>
+        <tr>
+            <td>Сміття</td>
+            <td>{{ smitya }}</td>
+            <td>{{ smitya2 }}</td>
+            <td>{{ smitya3 }}</td>
+            <td>{{ count_smitya }}</td>
+        </tr>
+        <tr>
+            <td>Сільські угіддя</td>
+            <td>{{ selo }}</td>
+            <td>{{ selo2 }}</td>
+            <td>{{ selo3 }}</td>
+            <td>{{ count_selo }}</td>
+        </tr>
+        <tr>
+            <td>Ліс</td>
+            <td>{{ lis }}</td>
+            <td>{{ lis2 }}</td>
+            <td>{{ lis3 }}</td>
+            <td>{{ count_lis }}</td>
+
+        </tr>
+        <tr>
+            <td>Торфовища</td>
+            <td>{{ torf }}</td>
+            <td>{{ torf2 }}</td>
+            <td>{{ torf3 }}</td>
+            <td>{{ count_torf }}</td>
+
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Транспорт</th>
+        </tr>
+        <tr>
+            <td>Загальна кількість</td>
+            <td>{{ transports }}</td>
+            <td>{{ transports2 }}</td>
+            <td>{{ transports3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Автомобільний</td>
+            <td>{{ avto }}</td>
+            <td>{{ avto2 }}</td>
+            <td>{{ avto3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Залізничний</td>
+            <td>{{ zalizn }}</td>
+            <td>{{ zalizn2 }}</td>
+            <td>{{ zalizn3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Авіація</td>
+            <td>{{ avia }}</td>
+            <td>{{ avia }}</td>
+            <td>{{ avia }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Надання допомоги</th>
+        </tr>
+        <tr>
+            <th>Загально Надання допомоги</th>
+            <td>{{ dopomoga }}</td>
+            <td>{{ dopomoga2 }}</td>
+            <td>{{ dopomoga3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Дтп</td>
+            <td>{{ dtp }}</td>
+            <td>{{ dtp2 }}</td>
+            <td>{{ dtp3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Дтп(подія)</td>
+            <td>{{ dtp_podiya }}</td>
+            <td>{{ dtp_podiya2 }}</td>
+            <td>{{ dtp_podiya3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>102</td>
+            <td>{{ dopomoga102 }}</td>
+            <td>{{ dopomoga102_2 }}</td>
+            <td>{{ dopomoga102_3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>103</td>
+            <td>{{ dopomoga103 }}</td>
+            <td>{{ dopomoga103_2 }}</td>
+            <td>{{ dopomoga103_3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>104</td>
+            <td>{{ dopomoga104 }}</td>
+            <td>{{ dopomoga104_2 }}</td>
+            <td>{{ dopomoga104_3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Населенню</td>
+            <td>{{ dopomoga_nas }}</td>
+            <td>{{ dopomoga_nas2 }}</td>
+            <td>{{ dopomoga_nas3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Відкриття дверей</td>
+            <td>{{ opendoors }}</td>
+            <td>{{ opendoors2 }}</td>
+            <td>{{ opendoors3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Вивільнено з автотранспорту</td>
+            <td>{{ opencar }}</td>
+            <td>{{ opencar2 }}</td>
+            <td>{{ opencar3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Санітарна обробка</td>
+            <td>{{ san_obrobka }}</td>
+            <td>{{ san_obrobka2 }}</td>
+            <td>{{ san_obrobka3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Подія на воді</td>
+            <td>{{ podiya_na_vodi }}</td>
+            <td>{{ podiya_na_vodi2 }}</td>
+            <td>{{ podiya_na_vodi3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Події інші</td>
+            <td>{{ podiya_inshi }}</td>
+            <td>{{ podiya_inshi2 }}</td>
+            <td>{{ podiya_inshi3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Врятовано осіб</td>
+            <td>{{ people_rescued_dopomoga.sum }}</td>
+            <td>{{ people_rescued2_dopomoga.sum }}</td>
+            <td>{{ people_rescued3_dopomoga.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Врятовано дітей</td>
+            <td>{{ children_rescued_dopomoga.sum }}</td>
+            <td>{{ children_rescued2_dopomoga.sum }}</td>
+            <td>{{ children_rescued3_dopomoga.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Надання допомоги тванинам</th>
+        </tr>
+        <tr>
+            <td>Загальна кількість</td>
+            <td>{{ zag_tvar }}</td>
+            <td>{{ zag_tvar2 }}</td>
+            <td>{{ zag_tvar3 }}</td>
+            <td>-</td>
+
+        </tr>
+        <tr>
+            <td>Парнокопитні</td>
+            <td>{{ parnokopitni }}</td>
+            <td>{{ parnokopitni2 }}</td>
+            <td>{{ parnokopitni3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Собаки</td>
+            <td>{{ dog }}</td>
+            <td>{{ dog2 }}</td>
+            <td>{{ dog3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Коти</td>
+            <td>{{ cat }}</td>
+            <td>{{ cat2 }}</td>
+            <td>{{ cat3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Плазуни</td>
+            <td>{{ plazuni }}</td>
+            <td>{{ plazuni2 }}</td>
+            <td>{{ plazuni3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Інші</td>
+            <td>{{ tvar_inshi }}</td>
+            <td>{{ tvar_inshi2 }}</td>
+            <td>{{ tvar_inshi3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">При Наданні допомоги на ДТП</th>
+        </tr>
+        <tr>
+            <td>Врятовано осіб</td>
+            <td>{{ people_rescued_dtp.sum }}</td>
+            <td>{{ people_rescued2_dtp.sum }}</td>
+            <td>{{ people_rescued3_dtp.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Врятовано дітей</td>
+            <td>{{ children_rescued_dtp.sum }}</td>
+            <td>{{ children_rescued2_dtp.sum }}</td>
+            <td>{{ children_rescued3_dtp.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало осіб</td>
+            <td>{{ people_injured_dtp.sum }}</td>
+            <td>{{ people_injured2_dtp.sum }}</td>
+            <td>{{ people_injured3_dtp.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало дітей</td>
+            <td>{{ children_injured_dtp.sum }}</td>
+            <td>{{ children_injured2_dtp.sum }}</td>
+            <td>{{ children_injured3_dtp.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло осіб</td>
+            <td>{{ people_died_dtp.sum }}</td>
+            <td>{{ people_died2_dtp.sum }}</td>
+            <td>{{ people_died3_dtp.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло дітей</td>
+            <td>{{ children_died_dtp.sum }}</td>
+            <td>{{ children_died2_dtp.sum }}</td>
+            <td>{{ children_died3_dtp.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">При Наданні допомоги на воді</th>
+        </tr>
+        <tr>
+            <td>Врятовано осіб</td>
+            <td>{{ people_rescued_voda.sum }}</td>
+            <td>{{ people_rescued2_voda.sum }}</td>
+            <td>{{ people_rescued3_voda.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Врятовано дітей</td>
+            <td>{{ children_rescued_voda.sum }}</td>
+            <td>{{ children_rescued2_voda.sum }}</td>
+            <td>{{ children_rescued3_voda.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало осіб</td>
+            <td>{{ people_injured_voda.sum }}</td>
+            <td>{{ people_injured2_voda.sum }}</td>
+            <td>{{ people_injured3_voda.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало дітей</td>
+            <td>{{ children_injured_voda.sum }}</td>
+            <td>{{ children_injured2_voda.sum }}</td>
+            <td>{{ children_injured3_voda.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло осіб</td>
+            <td>{{ people_died_voda.sum }}</td>
+            <td>{{ people_died2_voda.sum }}</td>
+            <td>{{ people_died3_voda.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло дітей</td>
+            <td>{{ children_died_voda.sum }}</td>
+            <td>{{ children_died2_voda.sum }}</td>
+            <td>{{ children_died3_voda.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">При Наданні допомоги Інше</th>
+        </tr>
+        <tr>
+            <td>Врятовано осіб</td>
+            <td>{{ people_rescued_inshi.sum }}</td>
+            <td>{{ people_rescued2_inshi.sum }}</td>
+            <td>{{ people_rescued3_inshi.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Врятовано дітей</td>
+            <td>{{ children_rescued_inshi.sum }}</td>
+            <td>{{ children_rescued2_inshi.sum }}</td>
+            <td>{{ children_rescued3_inshi.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало осіб</td>
+            <td>{{ people_injured_inshi.sum }}</td>
+            <td>{{ people_injured2_inshi.sum }}</td>
+            <td>{{ people_injured3_inshi.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало дітей</td>
+            <td>{{ children_injured_inshi.sum }}</td>
+            <td>{{ children_injured2_inshi.sum }}</td>
+            <td>{{ children_injured3_inshi.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло осіб</td>
+            <td>{{ people_died_inshi.sum }}</td>
+            <td>{{ people_died2_inshi.sum }}</td>
+            <td>{{ people_died3_inshi.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло дітей</td>
+            <td>{{ children_died_inshi.sum }}</td>
+            <td>{{ children_died2_inshi.sum }}</td>
+            <td>{{ children_died3_inshi.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Боєприпаси</th>
+        </tr>
+        <tr>
+            <th>Виявлення та знищення ВНП</th>
+            <td>{{ vnp }}</td>
+            <td>{{ vnp2 }}</td>
+            <td>{{ vnp3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Кількість знищених боеприпасів</td>
+            <td>{{ quantity_vnp.sum }}</td>
+            <td>{{ quantity_vnp2.sum }}</td>
+            <td>{{ quantity_vnp3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Хибні</th>
+        </tr>
+        <tr>
+            <td>Хибний виклик</td>
+            <td>{{ hibniy_viklik }}</td>
+            <td>{{ hibniy_viklik2 }}</td>
+            <td>{{ hibniy_viklik3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Хибне спрацювання АПС</td>
+            <td>{{ aps }}</td>
+            <td>{{ aps2 }}</td>
+            <td>{{ aps3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">НС</th>
+        </tr>
+        <tr>
+            <th>Загально НС</th>
+            <td>{{ ns }}</td>
+            <td>{{ ns2 }}</td>
+            <td>{{ ns3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Техногенного характеру</td>
+            <td>{{ tehno_haracter }}</td>
+            <td>{{ tehno_haracter2 }}</td>
+            <td>{{ tehno_haracter3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Природного характеру</td>
+            <td>{{ prirodnogo_haracter }}</td>
+            <td>{{ prirodnogo_haracter2 }}</td>
+            <td>{{ prirodnogo_haracter3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Соціального характеру</td>
+            <td>{{ social_haracter }}</td>
+            <td>{{ social_haracter2 }}</td>
+            <td>{{ social_haracter3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Военного характеру</td>
+            <td>{{ voen_haracter }}</td>
+            <td>{{ voen_haracter2 }}</td>
+            <td>{{ voen_haracter3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Порушено умови життєдіяльності осіб</td>
+            <td>{{ quantity_umovi.sum }}</td>
+            <td>{{ quantity_umovi2.sum }}</td>
+            <td>{{ quantity_umovi3.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Врятовано осіб</td>
+            <td>{{ people_rescued_ns.sum }}</td>
+            <td>{{ people_rescued2_ns.sum }}</td>
+            <td>{{ people_rescued3_ns.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Врятовано дітей</td>
+            <td>{{ children_rescued_ns.sum }}</td>
+            <td>{{ children_rescued2_ns.sum }}</td>
+            <td>{{ children_rescued3_ns.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало осіб</td>
+            <td>{{ people_injured_ns.sum }}</td>
+            <td>{{ people_injured2_ns.sum }}</td>
+            <td>{{ people_injured3_ns.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Постраждало дітей</td>
+            <td>{{ children_injured_ns.sum }}</td>
+            <td>{{ children_injured2_ns.sum }}</td>
+            <td>{{ children_injured3_ns.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло осіб</td>
+            <td>{{ people_died_ns.sum }}</td>
+            <td>{{ people_died2_ns.sum }}</td>
+            <td>{{ people_died3_ns.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Загинуло дітей</td>
+            <td>{{ children_died_ns.sum }}</td>
+            <td>{{ children_died2_ns.sum }}</td>
+            <td>{{ children_died3_ns.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Замінування</th>
+        </tr>
+        <tr>
+            <td>Повідомлення про замінування</td>
+            <td>{{ zaminuvanya }}</td>
+            <td>{{ zaminuvanya2 }}</td>
+            <td>{{ zaminuvanya3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Кількість об'єктів</td>
+            <td>{{ zaminuvanya_object.sum }}</td>
+            <td>{{ zaminuvanya2_object.sum }}</td>
+            <td>{{ zaminuvanya3_object.sum }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th colspan="5" style="background-color: #2C608A; color: white;">Інше</th>
+        </tr>
+        <tr>
+            <th>Загально Інше</th>
+            <td>{{ inshi }}</td>
+            <td>{{ inshi2 }}</td>
+            <td>{{ inshi3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Пригорання їжі</td>
+            <td>{{ prigoranya_izhi }}</td>
+            <td>{{ prigoranya_izhi2 }}</td>
+            <td>{{ prigoranya_izhi3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>К/з без послідуючого горіння</td>
+            <td>{{ kz }}</td>
+            <td>{{ kz2 }}</td>
+            <td>{{ kz3 }}</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Інформація про пожежу не підтвердилась, ознак пожежі не виявлено</td>
+            <td>{{ info_ne_pidt }}</td>
+            <td>{{ info_ne_pidt2 }}</td>
+            <td>{{ info_ne_pidt3 }}</td>
+            <td>-</td>
+        </tr>
+    </table>
+
+</div>
+
+<div id="id01" class="modal">
+    <form class="modal-content animate" action="{% url 'filter_journal' %}" method="post">
+        <span onclick="document.getElementById('id01').style.display='none'"
+              class="close" title="Закрити форму">×</span>
+        <div class="ram">
+            <h4 class="title" style="text-align:center;">Статистика викликів</h4>
+            <hr style="color: #FF9B4D; height: 2px;">
+            <p>Виберіть проміжок часу для отримання статистики</p>
+
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="signupbtn" style="background-color: #2C608A;">Відправити</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+{% endblock %}
+

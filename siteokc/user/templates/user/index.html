@@ -1,0 +1,25 @@
+{% extends 'base_user.html' %}
+
+{% block title %}
+{{ title }}|{{ block.super }}
+{% endblock %}
+
+{% block content%}
+<form method="post">
+    <div class="container">
+        <h4 class="title" style="text-align:center;">{{ title }}</h4>
+        <hr style="color: #FF9B4D; height: 2px;">
+        <p>Заповніть цю форму, щоб створити обліковий запис</p>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="signupbtn" style="background-color: #2C608A;">Зареєструватись</button>
+
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+        <span>Вже є обліковий запис? <a href="{% url 'login' %}">Авторизуйтесь тут</a></span>
+    </div>
+</form>
+
+
+{% endblock %}

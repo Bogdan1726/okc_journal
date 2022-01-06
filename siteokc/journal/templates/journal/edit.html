@@ -1,0 +1,20 @@
+{% extends 'journal_base.html' %}
+
+{% block title %}
+{{ title }}|{{ block.super }}
+{% endblock %}
+
+{% block content%}
+<div>
+    <form method="post" data-cities-url="{% url 'ajax_load_cities' %}">
+        <div class="container">
+            <h3>Зміна інформації про подію</h3>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <a class="btn btn-danger" style="width: 110px" href="{% url 'journal' %}">Відмінити</a>
+            <button type="submit" style="width: 120px" class="btn btn-success">Відправити</button>
+            <hr>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+<h4 class="title" style="text-align:center;">Опис події</h4>
+<hr style="color: #FF9B4D; height: 2px;">
+{% for item in city %}
+<div class="card">
+    <div class="card-body" style="border: 1px solid #FF9B4D">
+        <h5>{{ item.city }}</h5>
+        <h5>{{ item.town }}</h5>
+        <p>Категорія: <a>{{ item.category }}</a></p>
+        <p>Тип події: <a>{{ item.type_of_fire }}</a></p>
+        <p>Дата та час виникнення: <a>{{ item.date_of_receipt_message }}</a></p>
+        <p>Інформація про подію: <a>{{ item.information }}</a></p>
+        <p>Підрозділ який ліквідує: <a>{{ item.subdivisions }}</a></p>
+        {% if item.liquidation == False %}
+        <p>Стан: <a style="color: red;">Не ліквідовано</a></p>
+        {% else %}
+        <p>Стан: <a style="color: green;">Ліквідовано - {{ item.liquidation_time }}</a></p>
+        {% endif %}
+    </div>
+</div>
+<br>
+{% endfor %}
+

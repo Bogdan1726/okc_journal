@@ -1,0 +1,109 @@
+{% extends 'statistic_base.html' %}
+
+
+{% block title %}
+{{ title }}|{{ block.super }}
+{% endblock %}
+
+
+{% block content%}
+<div>
+    <img class="export" title="Додати статистику" src="/media/add.png"
+         onclick="document.getElementById('id01').style.display='block'" width="40px"
+         height="40px" style="width:auto;">
+
+    <img class="export" title="Експорт до word" src="/media/export word.png" onclick="exportHTML();" width="40px"
+         height="40px">
+
+    <img class="export" title="Експорт до excel" src="/media/export excel.png" onclick="ExportToExcel1('xlsx');"
+         width="40px" height="40px">
+</div>
+<div id="export_doc">
+    <table id="tbl_exporttable_to_xls1" style="background-color: white;">
+        <tr>
+            <th colspan="4" style="background-color: #2C608A;">
+                <div class="text-center" style="color: white;">
+                    <h4 class="title-table">{{ title }} за {{ date }}</h4>
+                </div>
+            </th>
+        </tr>
+
+        <tr>
+            <th scope="col">Підрозділ</th>
+            <th scope="col">Кількість дзвінків</th>
+            <th scope="col">Додав</th>
+            <th scope="col">Дата</th>
+        </tr>
+        {% for item in statistic %}
+        <tr>
+            <td>{{ item.subdivisions }}</td>
+            <td>{{item.number_of_calls }}</td>
+            <td>{{ item.add_user }}</td>
+            <td>{{ item.date|date:"d.m.Y" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div id="id01" class="modal">
+    <form class="modal-content animate" action="{% url 'add_statistic' %}" method="post">
+            <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                  title="Закрити форму">×</span>
+        <div class="ram">
+            <h4 class="title" style="text-align:center;">Статистика викликів</h4>
+            <hr style="color: #FF9B4D; height: 2px;">
+            <p>Заповніть форму для відправлення статистики</p>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="signupbtn" style="background-color: #2C608A;">Відправити</button>
+        </div>
+    </form>
+</div>
+
+<h3></h3>
+
+<div>
+    <img class="export" title="Експорт до word" src="/media/export word.png" onclick="exportHTML1();" width="40px"
+         height="40px">
+    <img class="export" title="Експорт до excel" src="/media/export excel.png" onclick="ExportToExcel('xlsx');"
+         width="40px" height="40px">
+</div>
+<div id="export_doc1">
+    <table id="tbl_exporttable_to_xls" style="background-color: white; border: 1px solid black;">
+        <tr>
+            <th colspan="4" style="background-color: #2C608A;">
+                <div class="text-center" style="color: white;">
+                    <h4 class="title-table">{{ title }} за остані</h4>
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th scope="col">Номер лінії</th>
+            <th scope="col">24 години</th>
+            <th scope="col">7 днів</th>
+            <th scope="col">1 місяць</th>
+        </tr>
+        <tr>
+            <td>101</td>
+            <td>{{ number_101 }}</td>
+            <td>{{ days7_101 }}</td>
+            <td>{{ month_101 }}</td>
+        </tr>
+        <tr>
+            <td>112</td>
+            <td>{{ number_112.sum }}</td>
+            <td>{{ days7_112.sum }}</td>
+            <td>{{ month_112.sum }}</td>
+        </tr>
+        <tr>
+            <td>Всього</td>
+            <td>{{ total.sum }}</td>
+            <td>{{ days7.sum }}</td>
+            <td>{{ total_month.sum }}</td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+
+{% endblock %}
